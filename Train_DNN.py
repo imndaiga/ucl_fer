@@ -45,11 +45,11 @@ if __name__ == "__main__":
     print('Pre-Processing images and labels')
     for i, data in enumerate(dataset):
       if data[-1] == b'Training':
-        X = np.append(X, d[1])
-        Y = np.append(Y, d[0])
+        X = np.append(X, data[1])
+        Y = np.append(Y, data[0])
       elif data[-1] in [b'PublicTest', b'PrivateTest']:
-        X_test = np.append(X_test, d[1])
-        Y_test = np.append(Y_test, d[0])
+        X_test = np.append(X_test, data[1])
+        Y_test = np.append(Y_test, data[0])
 
     # Reshape the images into 48x48
     X = X.reshape([-1, 48, 48, 1])
