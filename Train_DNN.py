@@ -5,6 +5,7 @@
 import os
 import argparse
 import tflearn
+from datetime import datetime
 import numpy as np
 from numpy import genfromtxt
 from tflearn.data_preprocessing import ImagePreprocessing
@@ -16,8 +17,7 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
 
-    print('Starting Emotion Recognition Model Training...')
-
+    print('Starting Emotion Recognition Model Training at {0}'.format(str(datetime.now())))
     if not os.path.exists(args.log):
         os.makedirs(args.log)
     if not os.path.exists(args.file):
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     X_test = np.asarray([])
     Y_test = np.asarray([])
 
-    print('Pre-Processing images and labels')
+    print('Pre-Processing images and labels at {0}'.format(str(datetime.now())))
     for i, data in enumerate(dataset):
       if data[-1] == b'Training':
         X = np.append(X, data[1])
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     img_aug = tflearn.ImageAugmentation()
     img_aug.add_random_flip_leftright()
 
-    print('Building Residual Network')
+    print('Building Residual Network at {0}'.format(str(datetime.now())))
     # Building Residual Network
     net = tflearn.input_data(shape=[None, 48, 48, 1], data_preprocessing=img_prep, data_augmentation=img_aug)
     net = tflearn.conv_2d(net, nb_filter=16, filter_size=3, regularizer='L2', weight_decay=0.0001)
@@ -91,7 +91,7 @@ if __name__ == "__main__":
                         max_checkpoints=20, tensorboard_verbose=2,
                         clip_gradients=0., tensorboard_dir=args.log)
 
-    print('Commencing model fitting')
+    print('Commencing model fitting at {0}'.format(str(datetime.now())))
     model.fit(X, Y, n_epoch=150, snapshot_epoch=False, snapshot_step=500,
               show_metric=True, batch_size=128, shuffle=True, run_id='resnet_emotion')
 
@@ -100,5 +100,5 @@ if __name__ == "__main__":
 
     model.save('model.tfl')
 
-    print('Finished training!')
+    print('Finished training at {0}'.format(str(datetime.now())))
     
