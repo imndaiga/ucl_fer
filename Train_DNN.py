@@ -83,15 +83,13 @@ if __name__ == "__main__":
 
     # Regression
     net = tflearn.fully_connected(net, 7, activation='softmax')
-    adam = tflearn.adam()
+    adam = tflearn.optimizers.Adam()
     net = tflearn.regression(net, optimizer=adam,
                              loss='categorical_crossentropy')
     # Training
-    model = tflearn.DNN(net, checkpoint_path='models/model_resnet_emotion',
+    model = tflearn.DNN(net, checkpoint_path='models/model_fer',
                         max_checkpoints=20, tensorboard_verbose=2,
                         clip_gradients=0., tensorboard_dir=args.log)
-
-    model.load('model_resnet_emotion-42000')
 
     print('Commencing model fitting')
     model.fit(X, Y, n_epoch=150, snapshot_epoch=False, snapshot_step=500,
