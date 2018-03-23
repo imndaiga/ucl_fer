@@ -1,3 +1,11 @@
+import os
+import argparse
+import tflearn
+from datetime import datetime
+import numpy as np
+from numpy import genfromtxt
+from tflearn.data_preprocessing import ImagePreprocessing
+
 if __name__ == '__main__':
 	# Residual blocks
 	# 32 layers: n=5, 56 layers: n=9, 110 layers: n=18
