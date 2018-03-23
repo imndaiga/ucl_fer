@@ -12,10 +12,9 @@ from tflearn.data_preprocessing import ImagePreprocessing
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--file', required=True, help="path of the csv file")
-parser.add_argument('-l', '--log', required=True, help="path of the tflearn log directory")
-parser.add_argument('-L', '--load', action="store_true", help="path of the tflearn log directory")
-parser.add_argument('-s', '--save', action="store_true", help="save training and test data")
-
+parser.add_argument('-l', '--log', default='tfLogs', help="path of the tflearn log directory")
+parser.add_argument('-L', '--load', action="store_true", default=False, help="path of the tflearn log directory")
+parser.add_argument('-s', '--save', action="store_true", default=False, help="save training and test data")
 args = parser.parse_args()
 
 if __name__ == "__main__":
@@ -26,22 +25,22 @@ if __name__ == "__main__":
     if not os.path.exists(args.file):
         raise FileNotFoundError('Please confirm path to training data file!')
 
-    savefile = None
-    loadfile = None
-    if not args.save and args.load:
+    saveFilePath = None
+    loadFile = None
+    if args.load and not args.save:
         if not os.path.exists('data.npz'):
             raise FileNotFoundError('Please confirm path to data store to load from!')
         else:
-            loadfile = np.load('data.npz')
+            loadFile = np.load('data.npz')
     elif args.save and not args.load:
-        savefile = 'data.npz'
+        saveFilePath = 'data.npz'
 
     # Residual blocks
     # 32 layers: n=5, 56 layers: n=9, 110 layers: n=18
     n = 5
 
     # Data loading and pre-processing
-    if args.save:
+    if not args.load:
         data = np.asarray(np.genfromtxt(args.file, delimiter=',',  dtype=None))
         label_names = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
 
@@ -65,14 +64,15 @@ if __name__ == "__main__":
             X_test = np.append(X_test, data[1])
             Y_test = np.append(Y_test, data[0])
 
-        print('Saving training and test data to {0} at {1}'.format(savefile, str(datetime.now())))
-        np.savez(savefile, X=X, Y=Y, X_test=X_test, Y_test=Y_test)
-    elif args.load:
-        print('Loading training and test data from {0} at {1}'.format(loadfile, str(datetime.now())))
-        X = savefile['X']
-        Y = savefile['Y']
-        X_test = savefile['X_test']
-        Y_test = savefile['Y_test']
+        if args.save:
+            print('Saving training and test data to {0} at {1}'.format(saveFilePath, str(datetime.now())))
+            np.savez(savefile, X=X, Y=Y, X_test=X_test, Y_test=Y_test)
+    else:
+        print('Loading training and test data from {0} at {1}'.format(loadFile, str(datetime.now())))
+        X = loadFile['X']
+        Y = loadFile['Y']
+        X_test = loadFile['X_test']
+        Y_test = loadFile['Y_test']
 
 
     # Reshape the images into 48x48
