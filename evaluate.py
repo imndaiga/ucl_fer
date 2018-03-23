@@ -65,7 +65,7 @@ if __name__ == '__main__':
     model.load('model.tfl')
 
     # Predict
-    print(model.predict(X_test[0]))
-    print(Y_test[0])
+    print(model.predict(X_test[0:10]))
+    print(Y_test[0:10])
 
 
