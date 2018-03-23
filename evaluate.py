@@ -6,7 +6,27 @@ import numpy as np
 from numpy import genfromtxt
 from tflearn.data_preprocessing import ImagePreprocessing
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-L', '--load', action="store_true", default=False, help="path of the tflearn log directory")
+args = parser.parse_args()
+
 if __name__ == '__main__':
+	loadFile = None
+    if args.load:
+        if not os.path.exists('data.npz'):
+            raise FileNotFoundError('Please confirm path to data store to load from!')
+        else:
+            loadFile = np.load('data.npz')
+
+    X = loadFile['X']
+    Y = loadFile['Y']
+    X_test = loadFile['X_test']
+    Y_test = loadFile['Y_test']
+
+	Y_test = tflearn.data_utils.to_categorical(Y_test, 7)
+	X_test = X_test.reshape([-1, 48, 48, 1])
+	print(X_test[0])
+
 	# Residual blocks
 	# 32 layers: n=5, 56 layers: n=9, 110 layers: n=18
 	n = 5
@@ -43,8 +63,9 @@ if __name__ == '__main__':
 	                    max_checkpoints=20, tensorboard_verbose=2,
 	                    clip_gradients=0.)
 
-
-
-	#model.load('drive/model.tfl', weights_only=True)
-	# model.load('drive/model.tfl.data-00000-of-00001', weights_only=True)  
 	model.load('model.tfl')
+
+	# Predict
+	print(model.predict())
+
+
