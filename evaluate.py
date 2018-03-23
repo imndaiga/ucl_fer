@@ -25,7 +25,6 @@ if __name__ == '__main__':
 
     Y_test = tflearn.data_utils.to_categorical(Y_test, 7)
     X_test = X_test.reshape([-1, 48, 48, 1])
-    print(X_test[0])
 
     # Residual blocks
     # 32 layers: n=5, 56 layers: n=9, 110 layers: n=18
@@ -66,6 +65,7 @@ if __name__ == '__main__':
     model.load('model.tfl')
 
     # Predict
-    print(model.predict())
+    print(model.predict(X_test[0]))
+    print(Y_test[0])
 
 
