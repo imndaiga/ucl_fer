@@ -125,4 +125,3 @@ if __name__ == "__main__":
     model.save('model.tfl')
 
     print('Finished training at {0}'.format(str(datetime.now())))
-    
