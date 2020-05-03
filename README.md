@@ -1,5 +1,3 @@
-# Affective Computing and Human Robot Interaction Group Project
-
 The entire project report can be read [here](https://github.com/wndaiga/ucl_fer/blob/master/report.pdf).
 
 ## Background
