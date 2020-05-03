@@ -18,4 +18,4 @@ In  this  work,  we  used  video  stimuli  to  elicit  certainemotions in four p
 Each subject watched and rated their affective response to seven videos, with both  discrete  and  continuous  labelling  adopted.
 Facial expressions were captured using frontal face video, while  an  Empatica  bracelet  measured  electrodermal and heart activity.
 We went on to train a deep neural network using facial images and discrete labels (happy, sad,  fear,  disgust,  surprise,  anger,  neutral),  and  also presented classifiers which linked physiological signals to ratings of valence and arousal.
-In both cases, results were shown to be significantly better than random classification. The final out of this project was a deep neural network trained to recognise emotions in consumers of online media using webcams and physiological sensors.
+In both cases, results were shown to be significantly better than random classification. The final output of this project was a deep neural network trained to recognise emotions in consumers of online media using webcams and physiological sensors.
