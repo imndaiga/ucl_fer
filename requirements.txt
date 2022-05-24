@@ -3,7 +3,7 @@ numpy==1.12.1
 Pillow==5.0.0
 protobuf==3.5.1
 six==1.11.0
-tensorflow-gpu==1.1.0
+tensorflow-gpu==2.6.4
 tflearn==0.3.2
 Werkzeug==0.14.1
 wincertstore==0.2
